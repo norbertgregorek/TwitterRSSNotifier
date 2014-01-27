@@ -1,0 +1,38 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <!-- Login to twitter -->
+    <item android:id="@+id/action_twitter_login"
+        android:icon="@drawable/ic_action_twitter_logo"
+        android:title="@string/twitter_login"
+        android:showAsAction="always"/>
+    
+    <!-- Search messages - not in use at present
+    <item android:id="@+id/action_search_feed"
+        android:icon="@android:drawable/ic_menu_search"
+        android:title="@string/search_messages"
+        android:showAsAction="always"
+        android:actionViewClass="android.widget.SearchView" />
+    -->
+    
+    <!-- Add new rss -->
+    <item android:id="@+id/action_add_new_rss_feed"
+        android:icon="@drawable/ic_action_new"
+        android:title="@string/add_new_rss_feed"
+        android:showAsAction="ifRoom"/>
+    
+    <!-- Logout from twitter -->
+    <item android:id="@+id/action_twitter_logout"
+        android:title="@string/twitter_logout"
+        android:showAsAction="never"/>
+    
+    <!-- Help -->
+    <item android:id="@+id/action_help"
+        android:showAsAction="never"
+        android:title="@string/help"/>
+    
+    <!-- Settings -->
+    <item android:id="@+id/action_settings"
+        android:showAsAction="never"
+        android:title="@string/action_settings"/>
+
+</menu>

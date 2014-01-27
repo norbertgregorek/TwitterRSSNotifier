@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <TableRow>
+        
+        <TextView
+            android:id="@+id/rssFeedTitleTextView"
+            android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:textAppearance="?android:attr/textAppearanceMedium"
+        	android:layout_marginBottom="@dimen/default_item_vertival_margin"
+        	android:textStyle="bold" />
+        
+    </TableRow>
+
+    <TableRow>
+        
+        <TextView
+            android:id="@+id/rssFeedLinkTextView"
+            android:layout_width="match_parent"
+        	android:layout_height="wrap_content" />
+        
+        <TextView
+            android:id="@+id/rssFeedRssLinkTextView"
+            android:layout_width="match_parent"
+        	android:layout_height="wrap_content"
+        	android:visibility="gone" />
+        
+    </TableRow>
+
+</TableLayout>
