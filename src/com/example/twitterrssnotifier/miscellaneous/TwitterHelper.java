@@ -19,8 +19,10 @@ import android.util.Log;
 import com.example.twitterrssnotifier.layout.MainActivity;
 import com.example.twitterrssnotifier.layout.TweetMessageDialog.TweetMessageInterface;
 
-//Subsidiary class that simplifies communication with twitter using twitter4j
-//Implemented as singleton
+/*
+ * Subsidiary class that simplifies communication with twitter using twitter4j
+ * Implemented as singleton.
+ */
 public class TwitterHelper
 {
 	private static TwitterHelper singleton = null;

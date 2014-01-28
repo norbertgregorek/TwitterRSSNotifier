@@ -6,7 +6,7 @@ import android.content.SharedPreferences.Editor;
 /*
  * Class that represents setiings for a single user.
  * ATTENTION! Only HOW_OLD_MESSAGES is used at present because I'm not sure 
- * if the rest of them is compulsory...
+ * if the rest of them is obligatory.
  */
 public class Settings
 {
@@ -104,7 +104,7 @@ public class Settings
 	}
 	public Settings()
 	{
-		this(10, true, true, -1);
+		this(10, true, true, 3);
 	}
 	
 	//Convenient method of getting settings. 

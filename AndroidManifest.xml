@@ -73,14 +73,22 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="android.intent.action.ACTION_INSTALL_PACKAGE" />
             </intent-filter>
+            
         </receiver>
         <receiver android:name="com.example.twitterrssnotifier.service.RssStartServiceReceiver" >
+        </receiver>
+        
+        <receiver android:name="com.example.twitterrssnotifier.service.RssScheduleReceiver" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
         </receiver>
 
         <activity
             android:name="com.example.twitterrssnotifier.layout.RssMessageActivity"
             android:label="@string/title_activity_rss_message" >
         </activity>
+        
     </application>
 
     <instrumentation

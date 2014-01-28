@@ -1,6 +1,7 @@
 package com.example.twitterrssnotifier.database;
 
 import java.util.Calendar;
+
 import com.example.twitterrssnotifier.miscellaneous.Miscellaneous;
 
 /* An assistant class that filter our rss messages.

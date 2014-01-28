@@ -31,7 +31,7 @@ import com.example.twitterrssnotifier.rsslibrary.RssMessage;
 
 /*
  * Class that represents service that works in background to download
- * new feeds that users follows.
+ * new feeds that users follow.
  */
 public class RssService extends IntentService
 {
@@ -149,7 +149,7 @@ public class RssService extends IntentService
 		}
 	}
 	
-	//Helper method just to update one Rss channel (we call it after clicking one channel)
+	//Helper method just to update one Rss channel (we call it after clicking one channel to get the fresh news)
 	public static void updateRssFeed(final Activity activity, final String rssLink, final String user)
 	{
 		new Thread(new Runnable()
@@ -212,6 +212,8 @@ public class RssService extends IntentService
 						//Just delete user not to perform it again
 						removalList.add(user);
 						Log.i("RssServiceDuplicate", user + " currently has " + message.getLink());
+						//Here we return. We assume that the newest news are located at the beginning
+						return;
 					}
 				}
 			}

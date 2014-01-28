@@ -25,9 +25,9 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.AdapterView.AdapterContextMenuInfo;
 
 import com.example.twitterrssnotifier.R;
 import com.example.twitterrssnotifier.database.RssContentProvider;
@@ -48,8 +48,6 @@ import com.example.twitterrssnotifier.service.RssService;
 public class MainActivity extends FragmentActivity
 					implements LoaderManager.LoaderCallbacks<Cursor>
 {
-	//This is key that we pass to bundle object
-	private static final String IS_LOGGED = "IS_LOGGED";
 	
 	//Use extra value when starting RssMessageActivity to transfer item link that was pressed
 	static final String FEED_LINK = "feed_link";
@@ -148,12 +146,9 @@ public class MainActivity extends FragmentActivity
 		@Override
 		public void onSuccessfulLogin()
 		{
-			refreshUI();
-			ToastHelper.showToast(MainActivity.this, getString(R.string.successfully_logged_in));
 			
-			helloWorldTextView.setText(getString(R.string.welcome) + " " + twitter.getUser().getScreenName());
-			//After successful login reset loader
-			getLoaderManager().restartLoader(0, null, MainActivity.this);
+			ToastHelper.showToast(MainActivity.this, getString(R.string.successfully_logged_in));
+			refreshUI();
 		}
 		@Override
 		public void onExceptionLogin(String message)
@@ -164,6 +159,7 @@ public class MainActivity extends FragmentActivity
 		public void onSuccessfulLogout()
 		{
 			ToastHelper.showToast(MainActivity.this, getString(R.string.successfully_logged_out));
+			refreshUI();
 		}
 	};
 	
@@ -193,34 +189,45 @@ public class MainActivity extends FragmentActivity
     {
     	return sharedPreferences;
     }
+    
 	private void refreshUI()
 	{
+		//Here set all UI
+		if (twitter.isTwitterLoggedInAlready())
+		{
+			helloWorldTextView.setText(getString(R.string.welcome) + " " + twitter.getUser().getScreenName());
+			getLoaderManager().restartLoader(0, null, MainActivity.this);
+		}
+	}
+	
+	private void resetContentView()
+	{
 		MainActivity.this.setContentView(R.layout.activity_main);
-		
-		//Prepare loader
+		//Get UI controls
+		helloWorldTextView = (TextView) findViewById(R.id.welcomeTitleTextView);
+		rssFeedListView = (ListView) findViewById(R.id.rssFeedListView);
+		//Registers contex menu
+		registerForContextMenu(rssFeedListView);
+		//Prepare adapter
 		adapter = new SimpleCursorAdapter(this, R.layout.rss_feed,
 				null,
 				new String[] {RssFeedTable.COLUMN_LINK, RssFeedTable.COLUMN_TITLE, RssFeedTable.COLUMN_RSS_LINK},
 				new int[] {R.id.rssFeedLinkTextView, R.id.rssFeedTitleTextView, R.id.rssFeedRssLinkTextView},
 				0);
-		
-		//Get UI controls
-		helloWorldTextView = (TextView) findViewById(R.id.welcomeTitleTextView);
-		rssFeedListView = (ListView) findViewById(R.id.rssFeedListView);
 		rssFeedListView.setOnItemClickListener(listViewItemClickListener);
 		rssFeedListView.setAdapter(adapter);
-		//Registers contex menu
-		registerForContextMenu(rssFeedListView);
 	}
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-		refreshUI();
+		resetContentView();
 		
+		//Init shared preferences
 		sharedPreferences = getSharedPreferences(PREFERENCE_FILE, MODE_PRIVATE);
 		
+		//INITIALIZE TWITTER REFERENCE
 		twitter = TwitterHelper.getInstance();
 		if (twitter == null)
 		{
@@ -229,14 +236,7 @@ public class MainActivity extends FragmentActivity
 		//Don't call it never ever again!
 		twitter.setActivityOwner(this);
 		
-		if (savedInstanceState != null)
-		{
-			if (savedInstanceState.getBoolean(IS_LOGGED))
-			{
-				getLoaderManager().restartLoader(0, null, MainActivity.this);
-				helloWorldTextView.setText(getString(R.string.welcome) + " " + twitter.getUser().getScreenName());
-			}
-		}
+		refreshUI();
 		
 		//Change listeners
 		addFeedDialog.setListener(addFeedDialogListener);
@@ -256,15 +256,10 @@ public class MainActivity extends FragmentActivity
 	protected void onNewIntent(Intent intent)
 	{
 		super.onNewIntent(intent);
-		//Handle search query
-		handleSearchQuery(intent);
+		//TODO Handle search query
+		//handleSearchQuery(intent);
 		setIntent(intent);
 		twitter.checkLoginOnCreateActivity();
-	}
-	@Override
-	protected void onSaveInstanceState(Bundle outState)
-	{
-		outState.putBoolean(IS_LOGGED, twitter.isTwitterLoggedInAlready());
 	}
 	
 	@Override
@@ -347,7 +342,7 @@ public class MainActivity extends FragmentActivity
 				}.execute();
 				break;
 			case R.id.action_twitter_logout:
-				MainActivity.this.setContentView(R.layout.activity_main);
+				resetContentView();
 				twitter.logout();
 				break;
 			case R.id.action_add_new_rss_feed:

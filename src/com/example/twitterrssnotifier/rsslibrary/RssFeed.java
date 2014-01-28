@@ -18,6 +18,11 @@ import android.util.Log;
 
 import com.example.twitterrssnotifier.miscellaneous.Miscellaneous;
 
+/*
+ * Class that represents single feed that we want to follow.
+ * To Create it use static method Create. It will automaitcally
+ * parse the whole XML content.
+ */
 public class RssFeed
 {
 	private static final String CHANNEL = "channel";
@@ -116,13 +121,23 @@ public class RssFeed
 								//If there is no pubdate 
 								Calendar c = Calendar.getInstance();
 								SimpleDateFormat df = new SimpleDateFormat(Miscellaneous.RFC822, Locale.ENGLISH);
-								pubdate = RssMessage.MANUAL_PUBDATE + df.format(c.getTime());
+								pubdate = df.format(c.getTime());
 							}
 							
 							Date truc = null;
 							try
 							{
 								truc = new SimpleDateFormat(Miscellaneous.RFC822, Locale.ENGLISH).parse(pubdate);
+								//TODO
+								//If the year has two digit we add 2000 years to it...
+								//It seems awfully because we use deprecated functions
+								//but I don't how to fix it at present
+								//I change the year because some rss feeds store year as two digits
+								//(for instance TVN)
+								if (truc.getYear() < 100)
+								{
+									truc.setYear(2000 + truc.getYear());
+								}
 							}
 							catch (ParseException e)
 							{

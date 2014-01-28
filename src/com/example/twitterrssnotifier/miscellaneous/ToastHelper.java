@@ -3,6 +3,10 @@ package com.example.twitterrssnotifier.miscellaneous;
 import android.app.Activity;
 import android.widget.Toast;
 
+
+/*
+ * This class show toast message on UI thread
+ */
 public class ToastHelper
 {
 	//Makes our life simpler... show toast from any thread

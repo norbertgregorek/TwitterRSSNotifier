@@ -16,7 +16,7 @@ public class Miscellaneous
 	public static final String RFC822 = "EEE, dd MMM yyyy HH:mm:ss Z";
 	
 	/*
-	 * Function from here
+	 * This function comes from the following link:
 	 * http://stackoverflow.com/questions/7953725/how-to-convert-milliseconds-to-date-format-in-android
 	 */
 	/**

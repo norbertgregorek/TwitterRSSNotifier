@@ -4,7 +4,10 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-//This class runs our RssService after REPEAT_TIME of system rebooting
+/*
+ * This class runs our RssService.
+ * Service implementation comes from: http://www.vogella.com/tutorials/AndroidServices/article.html
+ */
 public class RssScheduleReceiver extends BroadcastReceiver
 {
 	@Override

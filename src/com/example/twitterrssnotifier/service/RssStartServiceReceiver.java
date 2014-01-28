@@ -4,6 +4,9 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
+/*
+ * Run service after BOOT_COMPLETED (see AndroidMafinest.xml)
+ */
 public class RssStartServiceReceiver extends BroadcastReceiver
 {
 	@Override
